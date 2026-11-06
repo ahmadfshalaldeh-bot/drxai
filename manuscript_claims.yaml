@@ -42,9 +42,7 @@
 - {id: EP_n,         file: eyepacs/summary.json, key: n_images,                          value: 35126, tol: 0}
 
 # ---------------- Explainability (Table 7) ----------------
-- {id: XAI_iou_shap, file: messidor2/xai_summary.json, key: iou_shap_mean, value: 0.814, tol: 0.002}
-- {id: XAI_iou_lime, file: messidor2/xai_summary.json, key: iou_lime_mean, value: 0.754, tol: 0.002}
 - {id: XAI_t_shap,   file: messidor2/xai_summary.json, key: t_shap_mean,   value: 0.44, tol: 0.01}
 - {id: XAI_t_lime,   file: messidor2/xai_summary.json, key: t_lime_mean,   value: 1.91, tol: 0.01}
 - {id: XAI_rho,      file: messidor2/xai_summary.json, key: rho_randomized_median, value: 0.12, tol: 0.02}
-- {id: XAI_n_lesion, file: messidor2/xai_summary.json, key: n_lesion_images, value: 120, tol: 0}
+- {id: XAI_n,        file: messidor2/xai_summary.json, key: n_images, value: 150, tol: 0}

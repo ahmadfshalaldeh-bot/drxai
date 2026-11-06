@@ -174,21 +174,23 @@ def fig_calibration(oof: dict, out: Path, name: str, bins: int = 10,
 
 
 def fig_xai_quant(xai: pd.DataFrame, out: Path, name: str):
-    """Per-grade IoU (lesion-bearing grades only) and clinician plausibility."""
+    """Per-grade runtime (SHAP vs LIME) and SHAP-LIME agreement of binarised maps."""
     g = xai.groupby("grade")
-    fig, ax = plt.subplots(1, 2, figsize=(7.2, 2.7))
     grades = sorted(xai.grade.unique())
+    fig, ax = plt.subplots(1, 2, figsize=(7.2, 2.7))
     w = 0.38
-    for off, meth, col in ((-w / 2, "shap", SERIES[0]), (w / 2, "lime", SERIES[1])):
-        les = [gr for gr in grades if gr > 0]
-        mu = [100 * g.get_group(gr)[f"iou_{meth}"].mean() for gr in les]
-        ax[0].bar(np.array(les) + off, mu, w, color=col, label=meth.upper())
-        ag = [100 * g.get_group(gr)[f"plausible_{meth}"].mean() for gr in grades]
-        ax[1].bar(np.array(grades) + off, ag, w, color=col, label=meth.upper())
-    ax[0].set_xticks([1, 2, 3, 4], GRADES[1:]); ax[1].set_xticks(grades, [GRADES[i] for i in grades])
-    ax[0].set_ylabel("Lesion IoU at P85 (%)"); ax[1].set_ylabel("Rated plausible by both readers (%)")
+    for off, col, colr, lab in ((-w / 2, "t_shap", SERIES[0], "SHAP"), (w / 2, "t_lime", SERIES[1], "LIME")):
+        ax[0].bar(np.array(grades) + off, [g.get_group(k)[col].mean() for k in grades], w,
+                  yerr=[g.get_group(k)[col].std(ddof=1) for k in grades], color=colr, label=lab,
+                  capsize=2)
+    ax[1].bar(grades, [100 * g.get_group(k)["iou_shap_lime"].mean() for k in grades], 0.6,
+              color=SERIES[2])
+    for a in ax:
+        a.set_xticks(grades, [GRADES[k] for k in grades])
+    ax[0].set_ylabel("Seconds per image"); ax[0].legend(frameon=False)
+    ax[1].set_ylabel("IoU of binarised SHAP and LIME (%)")
     for a, t in zip(ax, ["(a)", "(b)"]):
-        a.set_title(t, loc="left"); a.legend(frameon=False)
+        a.set_title(t, loc="left")
     _save(fig, out, name)
 
 
@@ -220,7 +222,7 @@ def fig_xai_panel(rows: list[dict], image_id: str, grade_ref: int, grade_pred: i
         ax[r, 0].set_ylabel(row["label"], fontsize=7)
         for c in range(4):
             ax[r, c].set_xticks([]); ax[r, c].set_yticks([]); ax[r, c].grid(False)
-    for c, t in enumerate(["Input (+ expert lesions)", "Grad-CAM", "LIME (SLIC)", "SHAP"]):
+    for c, t in enumerate(["Input", "Grad-CAM", "LIME (SLIC)", "SHAP"]):
         ax[0, c].set_title(t)
     fig.suptitle(f"{image_id} — reference G{grade_ref}, ensemble prediction G{grade_pred}",
                  y=0.005, fontsize=7, color=MUTED)

@@ -95,8 +95,8 @@ statistics:
 
 xai:
   dataset: messidor2
-  annotations_dir: data/messidor2/lesion_masks   # PNG masks, one per annotated image
-  annotation_index: data/messidor2/annotation_index.csv  # image_id, grade, rater1_plaus, rater2_plaus ...
+  annotations_dir: data/messidor2/lesion_masks   # optional; not used in the paper
+  n_per_grade: 30                                # stratified held-out audit sample (150 images)
   binarize_percentile: 85
   lime_segments: 64
   lime_compactness: 10

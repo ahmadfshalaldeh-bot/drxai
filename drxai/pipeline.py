@@ -100,26 +100,35 @@ def stage_complexity(cfg):
     return df
 
 
-def stage_xai(cfg, n_panel_image: str | None = None):
-    """Quantitative XAI audit on the annotated Messidor-2 subset (Section 3.11)."""
-    import cv2
+def stage_xai(cfg, n_per_grade: int = 30):
+    """Explanation audit on held-out Messidor-2 images (Section 3.11).
+
+    A stratified random sample (n_per_grade per ICDR grade, seed 42) is explained
+    by the models of the iteration in which each image is a test image. Reported:
+    runtime of SHAP and LIME, agreement (IoU) between binarised maps, and the
+    cascading parameter-randomisation check. If expert lesion masks exist in
+    ``xai.annotations_dir`` they are used for an additional lesion IoU; the
+    paper does not use them.
+    """
     import tensorflow as tf
 
     from . import xai as X
     from .metrics import macro_auc
     from .models import build_model
-    from .stats import paired_t
 
     xc = cfg["xai"]
     ds = xc["dataset"]
     res = Path(cfg["paths"]["results"]) / ds
-    ann = pd.read_csv(xc["annotation_index"])           # image_id, rater1_*, rater2_* ...
-    idx = pd.read_csv(res / "index_folds.csv").merge(pd.read_csv(res / "qc.csv"), on="image_id")
+    idx = pd.read_csv(res / "index_folds.csv")
+    sample = (idx.groupby("grade", group_keys=False)
+                 .apply(lambda g: g.sample(min(n_per_grade, len(g)), random_state=cfg["seed"])))
+    sample[["image_id", "grade", "fold"]].to_csv(res / "xai_sample.csv", index=False)
     members_names = cfg["ensembles"]["proposed"]["members"]
+    p = xc["binarize_percentile"]
     rows = []
     for k in range(cfg["cv"]["n_folds"]):
         t = _table(cfg, ds, k)
-        sub = ann.merge(t[t.role == "test"], on="image_id")
+        sub = t[(t.role == "test") & t.image_id.isin(sample.image_id)]
         if sub.empty:
             continue
         members, val_aucs = [], []
@@ -131,7 +140,7 @@ def stage_xai(cfg, n_panel_image: str | None = None):
             val_aucs.append(macro_auc(z["y"], z["p"]))
         w = np.asarray(val_aucs) / np.sum(val_aucs)
         bg_ids = t[t.role == "train"].sample(xc["shap_background"], random_state=cfg["seed"])
-        background = np.stack([_rgb(p) for p in bg_ids.cached]).astype(np.float32)
+        background = np.stack([_rgb(q) for q in bg_ids.cached]).astype(np.float32)
 
         def predict(batch, members=members, w=w):
             b = np.asarray(batch, np.float32)
@@ -139,41 +148,36 @@ def stage_xai(cfg, n_panel_image: str | None = None):
 
         for r in sub.itertuples():
             x = _rgb(r.cached).astype(np.float32)
-            P = predict(x[None])[0]
-            c = int(P.argmax())
+            c = int(predict(x[None])[0].argmax())
             (shap_map, methods), t_shap, sd_shap = X.timed(
                 lambda: X.shap_ensemble(members, w, x, background, c, xc["shap_samples"]),
                 xc["runtime_repeats"])
-            (lime_map, segs), t_lime, sd_lime = X.timed(
+            (lime_map, _), t_lime, sd_lime = X.timed(
                 lambda: X.lime_map(predict, x, c, xc, cfg["seed"]), xc["runtime_repeats"])
             cam = X.ensemble_gradcam(members, w, x, c)
+            a_s, a_l, a_g = (X.binarize_top(m_, p) for m_ in (shap_map, lime_map, cam))
             gt = _mask(Path(xc["annotations_dir"]) / f"{Path(r.image_id).stem}.png")
-            a_s = X.binarize_top(shap_map, xc["binarize_percentile"])
-            a_l = X.binarize_top(lime_map, xc["binarize_percentile"])
-            a_g = X.binarize_top(cam, xc["binarize_percentile"])
-            has_lesion = gt is not None and gt.any()
             rows.append({
                 "image_id": r.image_id, "iteration": k + 1, "grade": int(r.grade), "pred": c,
-                "iou_shap": X.iou(a_s, gt) if has_lesion else np.nan,
-                "iou_lime": X.iou(a_l, gt) if has_lesion else np.nan,
-                "iou_gradcam": X.iou(a_g, gt) if has_lesion else np.nan,
-                "iou_shap_vs_lime": X.iou(a_s, a_l),
+                "iou_shap_lime": X.iou(a_s, a_l), "iou_shap_gradcam": X.iou(a_s, a_g),
+                "iou_lime_gradcam": X.iou(a_l, a_g),
+                "iou_shap_lesion": X.iou(a_s, gt) if gt is not None and gt.any() else np.nan,
                 "t_shap": t_shap, "t_shap_sd": sd_shap, "t_lime": t_lime, "t_lime_sd": sd_lime,
                 "shap_method": "+".join(sorted(set(methods))),
-                "plausible_shap": int(getattr(r, "rater1_shap") >= 4 and getattr(r, "rater2_shap") >= 4),
-                "plausible_lime": int(getattr(r, "rater1_lime") >= 4 and getattr(r, "rater2_lime") >= 4),
                 "rho_randomized": _sanity(members, w, x, background, c, shap_map, xc),
             })
         tf.keras.backend.clear_session()
     df = pd.DataFrame(rows)
     df.to_csv(res / "xai_audit.csv", index=False)
-    les = df.dropna(subset=["iou_shap"])
-    summary = {"n_images": len(df), "n_lesion_images": len(les),
-               "iou_shap_mean": les.iou_shap.mean(), "iou_lime_mean": les.iou_lime.mean(),
-               "paired_t": paired_t(les.iou_shap, les.iou_lime),
-               "t_shap_mean": df.t_shap.mean(), "t_lime_mean": df.t_lime.mean(),
-               "rho_randomized_median": df.rho_randomized.median(),
-               "rater_kappa": _rater_kappa(ann)}
+    cols = ["t_shap", "t_lime", "iou_shap_lime", "iou_shap_gradcam", "rho_randomized"]
+    per_grade = {int(g): {c_: [float(d[c_].mean()), float(d[c_].std(ddof=1))] for c_ in cols}
+                 for g, d in df.groupby("grade")}
+    summary = {"n_images": len(df), "per_grade": per_grade,
+               "t_shap_mean": df.t_shap.mean(), "t_shap_sd": df.t_shap.std(ddof=1),
+               "t_lime_mean": df.t_lime.mean(), "t_lime_sd": df.t_lime.std(ddof=1),
+               "iou_shap_lime_mean": df.iou_shap_lime.mean(),
+               "iou_shap_gradcam_mean": df.iou_shap_gradcam.mean(),
+               "rho_randomized_median": df.rho_randomized.median()}
     save_json(summary, res / "xai_summary.json")
     return summary
 
@@ -184,17 +188,6 @@ def _sanity(members, w, x, background, c, shap_map, xc):
     rnd = [X.randomize_top(m, xc["randomization_layers"]) for m in members]
     phi_r, _ = X.shap_ensemble(rnd, w, x, background, c, xc["shap_samples"])
     return X.rank_similarity(shap_map, phi_r)
-
-
-def _rater_kappa(ann):
-    from sklearn.metrics import cohen_kappa_score
-
-    out = {}
-    for meth in ("shap", "lime"):
-        a, b = f"rater1_{meth}", f"rater2_{meth}"
-        if a in ann and b in ann:
-            out[meth] = float(cohen_kappa_score(ann[a], ann[b], weights="quadratic"))
-    return out
 
 
 def _rgb(path):

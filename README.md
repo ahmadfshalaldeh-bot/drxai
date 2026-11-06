@@ -23,7 +23,7 @@ manuscript with the regenerated results and fails on any mismatch.
 | §3.8 | Adam 1e-4, batch 16, ≤ 50 epochs, early stopping (10), ReduceLROnPlateau (×0.5, 5), inverse-frequency class weights | `drxai/train.py` |
 | §3.9 | Macro OvR AUC, sensitivity, specificity, F1, QWK, ECE (10 bins), multiclass Brier, referable DR, PPV/NPV | `drxai/metrics.py` |
 | §3.10 | Generalised paired DeLong for macro-AUC (Proposition 2), McNemar, Holm, patient-cluster bootstrap | `drxai/stats.py` |
-| §3.11 | Grad-CAM, SLIC-LIME, ensemble SHAP (Proposition 3), P85 binarisation, IoU, runtime, cascading randomisation | `drxai/xai.py`, `drxai/pipeline.py` |
+| §3.11 | Grad-CAM, SLIC-LIME, ensemble SHAP (Proposition 3), P85 binarisation, SHAP–LIME agreement, runtime, cascading randomisation | `drxai/xai.py`, `drxai/pipeline.py` |
 | Table 6 | Parameters, GFLOPs, latency | `drxai/complexity.py` |
 | Figs 4–11 | All data figures from experiment outputs | `drxai/figures.py` |
 
@@ -35,8 +35,6 @@ data/
   messidor2/IMAGES/*                             # Messidor-2, obtained from ADCIS under its licence
   messidor2/messidor_data.csv                    # Krause et al. (2018) adjudicated grades (Kaggle: google-brain/messidor2-dr-grades)
   messidor2/messidor-2_pairs.csv                 # image_id,exam_id  (build with data.messidor_pairs_from_spreadsheet)
-  messidor2/lesion_masks/<image_stem>.png        # expert lesion masks for the XAI audit (released with the paper)
-  messidor2/annotation_index.csv                 # image_id, rater1_shap, rater2_shap, rater1_lime, rater2_lime (Likert 1-5)
 ```
 
 ## 3. Reproduce
