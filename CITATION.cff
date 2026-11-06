@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the article."
+title: "drxai: explainable attention-augmented ensemble for diabetic retinopathy grading"
+version: 1.0.0
+license: MIT
+authors:
+  - {family-names: Shalaldeh, given-names: Ahmad, orcid: "https://orcid.org/0000-0001-6171-7150", affiliation: "Al-Ahliyya Amman University"}
+  - {family-names: AlMarshoud, given-names: Mishri, affiliation: "International University of Kuwait"}
+  - {family-names: Alhawarat, given-names: Mohammad O., affiliation: "Al-Ahliyya Amman University"}
+  - {family-names: Alnsour, given-names: Ayman, affiliation: "Al-Ahliyya Amman University"}
+  - {family-names: Safa, given-names: Majeed, affiliation: "Lincoln University"}
+  - {family-names: Logan, given-names: Chris, affiliation: "Lincoln University"}
+  - {family-names: Othman, given-names: Mohmmad, affiliation: "University of Canterbury"}
+  - {family-names: Al-mahamid, given-names: Sara, affiliation: "University of Strathclyde"}
+  - {family-names: Rahman, given-names: Mohammad Mahfujur, affiliation: "Ilem Group"}
+preferred-citation:
+  type: article
+  title: "An Explainable Ensemble Framework Combining Transfer Learning, Attention Mechanisms, and Post-Hoc Interpretability for Five-Class Diabetic Retinopathy Grading"
+  journal: "Mathematics"
+  year: 2026
