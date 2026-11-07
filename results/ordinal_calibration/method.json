@@ -1,0 +1,10 @@
+{
+  "method": "group-disjoint ordinal isotonic calibration of fixed probabilities",
+  "base_predictions": "fixed EfficientNet-B4 fold-assigned probabilities; source filename is retained for compatibility",
+  "meta_folds": 5,
+  "group_column": "subject_id (filename-derived grouping key; not a verified identity)",
+  "seed": 2026,
+  "external_validation": false,
+  "end_to_end_nested_retraining": false,
+  "description": "Each cumulative probability P(Y>=k) is calibrated on four partitions of filename-derived grouping keys and evaluated on the fifth; rows are projected to a valid decreasing cumulative distribution before conversion back to five-class probabilities. This is not end-to-end nested cross-validation or external validation."
+}

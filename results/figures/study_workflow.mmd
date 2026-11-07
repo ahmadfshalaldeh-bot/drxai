@@ -1,0 +1,14 @@
+flowchart TB
+    A[Analyzed Kaggle DR cohort<br/>35,126 labeled photographs] --> B[Prediction-blind audit<br/>IDs, labels, image readability, grouping keys]
+    B --> C[Filename-derived grouping<br/>17,563 grouping keys<br/>paired eye-side records retained together]
+    C --> D[Group-disjoint five-fold assignment<br/>35,126 fold-assigned predictions]
+    D --> E[EfficientNet-B4 transfer learning<br/>512 × 512 preprocessing<br/>training-only augmentation]
+    E --> F[Fold-assigned probabilities<br/>five severity grades]
+    F --> G[Primary evaluation<br/>accuracy, balanced accuracy, macro-F1<br/>QWK, log loss, macro ROC-AUC]
+    F --> H[Secondary evaluation<br/>referable DR grade ≥ 2<br/>ordinal-risk decision sensitivity<br/>group-disjoint ordinal calibration, 5 meta-folds<br/>paired group-bootstrap CIs]
+    G --> I[Audited manuscript outputs]
+    H --> I
+    style A fill:#E8F0F5,stroke:#35608D,stroke-width:1px
+    style C fill:#EAF3EE,stroke:#4F8A8B,stroke-width:1px
+    style E fill:#F7EFE4,stroke:#C18F59,stroke-width:1px
+    style I fill:#F3E8EE,stroke:#9B5C6D,stroke-width:1px

@@ -1,0 +1,46 @@
+{
+  "primary": {
+    "n": 35126,
+    "accuracy": 0.752975004270341,
+    "balanced_accuracy": 0.5839070360337769,
+    "macro_f1": 0.5698482056084779,
+    "weighted_f1": 0.7734212300513957,
+    "macro_precision": 0.5688889856176,
+    "macro_recall": 0.5839070360337769,
+    "log_loss": 0.739464030719558,
+    "qwk": 0.7360064010174023,
+    "macro_auc_ovr": 0.8736644700764206,
+    "predicted_positive_rate_referable": 0.20326823435631725
+  },
+  "qc_sensitivity": {
+    "n": 35122,
+    "accuracy": 0.7530038152724788,
+    "balanced_accuracy": 0.5838151065692384,
+    "macro_f1": 0.5697843350880547,
+    "weighted_f1": 0.773446915405589,
+    "macro_precision": 0.5688353750304004,
+    "macro_recall": 0.5838151065692384,
+    "log_loss": 0.7394210747755112,
+    "qwk": 0.7360290162243919,
+    "macro_auc_ovr": 0.8736190531328221,
+    "predicted_positive_rate_referable": 0.20329138431752178
+  },
+  "referable": {
+    "n": 35126,
+    "accuracy": 0.9046005807663838,
+    "balanced_accuracy": 0.8558076124624567,
+    "sensitivity_recall_referable": 0.7756438236577914,
+    "specificity_no_dr": 0.9359714012671221,
+    "precision_ppv_referable": 0.7466386554621849,
+    "f1": 0.7608649111539285,
+    "roc_auc": 0.9305034678419547,
+    "log_loss_binary": 0.2475185027229075,
+    "tn": 26444,
+    "fp": 1809,
+    "fn": 1542,
+    "tp": 5331
+  },
+  "ece_15": 0.1414537339921995,
+  "archive_scope_note": "The supplied EfficientNet archive lacked complete per-fold metrics, interval outputs, calibration outputs, figures, epoch-wise training histories, and full runtime records. The prediction-level analyses and figures in this release were independently reconstructed from the audited fold-assigned probabilities, fold assignments, and other available provenance; the raw prediction file retains a legacy OOF filename.",
+  "training_history_note": "Available training-history records were incomplete and insufficient to reconstruct genuine epoch-wise learning curves or exact stopping behavior."
+}

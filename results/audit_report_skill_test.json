@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "inputs": {
+    "predictions": "/home/ubuntu/dr_revision/github_ready_dr_efficientnet_b4/results/raw/oof_predictions.csv",
+    "folds": "/home/ubuntu/dr_revision/github_ready_dr_efficientnet_b4/results/raw/fold_assignments.csv",
+    "probability_columns": [
+      "prob_class_0",
+      "prob_class_1",
+      "prob_class_2",
+      "prob_class_3",
+      "prob_class_4"
+    ]
+  },
+  "checks": {
+    "prediction_rows": 35126,
+    "fold_rows": 35126,
+    "prediction_ids_unique": true,
+    "fold_ids_unique": true,
+    "prediction_fold_id_match": true,
+    "label_match": true,
+    "subject_count": 17563,
+    "subject_fold_leakage_count": 0,
+    "subject_fold_integrity": true,
+    "probability_finite": true,
+    "probability_sum_max_abs_error": 1.7666621787704173e-07,
+    "probability_sums_valid": true,
+    "argmax_match": true,
+    "unique_predicted_classes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "label_counts": {
+      "0": 25810,
+      "1": 2443,
+      "2": 5292,
+      "3": 873,
+      "4": 708
+    },
+    "fold_counts": {
+      "0": 7026,
+      "1": 7024,
+      "2": 7026,
+      "3": 7024,
+      "4": 7026
+    }
+  },
+  "recomputed_metrics": {
+    "accuracy": 0.752975004270341,
+    "balanced_accuracy": 0.5839070360337769,
+    "macro_f1": 0.5698482056084779,
+    "log_loss": 0.7394640317556342,
+    "macro_roc_auc": 0.8736644692733115
+  }
+}

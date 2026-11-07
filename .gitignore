@@ -1,8 +1,16 @@
+.venv/
 __pycache__/
-*.pyc
-.pytest_cache/
+*.py[cod]
+.DS_Store
+Thumbs.db
+# Do not commit raw Kaggle images or private/local copies
 data/
-cache/
-runs/
-results/
-*.h5
+*.jpeg
+*.jpg
+*.zip
+# Do not commit large checkpoints unless licensing and repository storage are verified
+*.pth
+*.pt
+*.ckpt
+# Generated outputs can be regenerated; retain only curated reference outputs
+results/recomputed_test/

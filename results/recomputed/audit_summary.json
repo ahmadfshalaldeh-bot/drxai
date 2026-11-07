@@ -1,0 +1,16 @@
+{
+  "rows": 35126,
+  "unique_image_ids": 35126,
+  "unique_groups": 17563,
+  "fold_counts": {
+    "0": 7026,
+    "1": 7024,
+    "2": 7026,
+    "3": 7024,
+    "4": 7026
+  },
+  "group_column": "subject_id",
+  "ece_15": 0.1414537339921995,
+  "probability_sum_min": 0.999999833838215,
+  "probability_sum_max": 1.0000001766662179
+}

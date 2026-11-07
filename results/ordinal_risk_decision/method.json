@@ -1,0 +1,12 @@
+{
+  "decision_rule": "argmin_k sum_j (j-k)^2 p_j(x)",
+  "equivalence": "nearest integer to posterior mean grade, with lower-grade tie breaking",
+  "primary_rule": "argmax retained as primary manuscript result",
+  "group_bootstrap": true,
+  "replicates": 1000,
+  "seed": 2026,
+  "external_validation": false,
+  "retraining": false,
+  "grouping_key": "filename-derived grouping key; not independently verified as a clinical patient identifier",
+  "comparison": "fixed fold-assigned probabilities; paired 1000-replicate filename-group bootstrap, seed 2026"
+}

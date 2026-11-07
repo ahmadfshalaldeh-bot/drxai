@@ -1,0 +1,10 @@
+figure,source,analysis
+Figure_1_Study_Workflow.png,study_workflow.mmd,Rendered workflow diagram; 512 × 512 network input.
+Figure_2_Class_Distribution.png,results/raw/oof_predictions.csv,"Verified labels; primary analysis n=35,126."
+Figure_3_Representative_Fundus_Images.png,existing provenance-recorded panel,Genuine source photographs; verify image-use permissions.
+Figure_4_Metric_Confidence_Intervals.png,results/metrics/confidence_intervals_extended.csv,"1000-replicate filename-group bootstrap, seed 2026."
+Figure_5_ROC_Curves.png,results/raw/oof_predictions.csv,Fold-assigned probabilities; one-vs-rest ROC-AUC.
+Figure_6_Confusion_Matrices.png,results/raw/oof_predictions.csv via src/make_confusion_matrix_figure.py,Recomputed fold-assigned argmax predictions and audited labels.
+Figure_7_Ordinal_Risk_Decision_Comparison.png,results/ordinal_risk_decision/summary_metrics.csv,Fixed fold-assigned probabilities; secondary posterior squared-distance decision rule.
+Figure_8_Referable_DR_Analysis.png,results/raw/oof_predictions.csv,Derived grade-≥2 endpoint from five-class probabilities and argmax.
+Figure_9_Calibration.png,results/raw/oof_predictions.csv,Primary uncalibrated baseline; 15 fixed confidence bins.

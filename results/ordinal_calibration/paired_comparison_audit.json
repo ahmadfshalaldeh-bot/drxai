@@ -1,0 +1,17 @@
+{
+  "rows": 35126,
+  "raw_min_probability": 9.999999588225775e-13,
+  "calibrated_min_probability": 9.999999999999998e-13,
+  "raw_max_abs_sum_error": 4.440892098500626e-16,
+  "calibrated_max_abs_sum_error": 4.440892098500626e-16,
+  "raw_argmax_matches": true,
+  "calibrated_argmax_class_counts": {
+    "0": 28653,
+    "1": 1268,
+    "2": 4137,
+    "3": 571,
+    "4": 497
+  },
+  "method_note": "Paired filename-group bootstrap; intervals are for calibrated minus raw metric differences, are not p-values, and do not establish verified patient identity.",
+  "filename_derived_groups": 17563
+}
