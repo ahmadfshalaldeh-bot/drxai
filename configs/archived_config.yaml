@@ -1,0 +1,3 @@
+model: efficientnet_b4
+resolution: 512x512
+loss: focal_loss_gamma_2

@@ -1,0 +1,5 @@
+image_id,label,subject_id,fold,reason,identification
+1986_left,0,1986,1,grayscale pixel-intensity SD < 2.0 (blank or nearly blank) in the prediction-blind image audit,recovered from archived QC-sensitivity metrics; reproduces Table 11 exactly
+32253_right,1,32253,2,grayscale pixel-intensity SD < 2.0 (blank or nearly blank) in the prediction-blind image audit,recovered from archived QC-sensitivity metrics; reproduces Table 11 exactly
+34689_left,0,34689,3,grayscale pixel-intensity SD < 2.0 (blank or nearly blank) in the prediction-blind image audit,recovered from archived QC-sensitivity metrics; reproduces Table 11 exactly
+43457_left,1,43457,1,grayscale pixel-intensity SD < 2.0 (blank or nearly blank) in the prediction-blind image audit,recovered from archived QC-sensitivity metrics; reproduces Table 11 exactly

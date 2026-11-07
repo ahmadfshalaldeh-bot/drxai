@@ -1,0 +1,10 @@
+figure,file,source,notes,width_px,height_px,dpi_x,dpi_y
+Figure 1,Figure_1_Study_Workflow.png,study_workflow.mmd,Study workflow; input size 512 × 512; shows primary and secondary analyses.,2800,3864,600,600
+Figure 2,Figure_2_Class_Distribution.png,results/raw/oof_predictions.csv (legacy filename; audited fold-assigned predictions),"Analyzed Kaggle cohort, n=35,126; grade distribution from audited labels.",4110,2160,600,600
+Figure 3,Figure_3_Representative_Fundus_Images.png,existing provenance-recorded representative fundus image panel,Genuine Kaggle images with labels from the analyzed manifest; confirm image-use permissions before publication.,5100,3060,600,600
+Figure 4,Figure_4_Metric_Confidence_Intervals.png,results/metrics/confidence_intervals_extended.csv,1000-replicate filename-group bootstrap percentile intervals (seed 2026).,4110,2400,600,600
+Figure 5,Figure_5_ROC_Curves.png,results/raw/oof_predictions.csv (legacy filename; audited fold-assigned predictions),Pooled one-vs-rest ROC curves from fold-assigned probabilities.,4110,2640,600,600
+Figure 6,Figure_6_Confusion_Matrices.png,results/raw/oof_predictions.csv via src/make_confusion_matrix_figure.py,Pooled confusion counts and row-normalized recall from recomputed argmax predictions. Regenerated in revision so that colour bars no longer cover matrix cells; counts unchanged.,4920,2220,600,600
+Figure 7,Figure_7_Ordinal_Risk_Decision_Comparison.png,results/ordinal_risk_decision/summary_metrics.csv and paired_group_bootstrap_differences.csv,Secondary squared-distance decision sensitivity on fixed fold-assigned probabilities; large ordinal error is |error| ≥ 2.,6240,2700,600,600
+Figure 8,Figure_8_Referable_DR_Analysis.png,results/raw/oof_predictions.csv (legacy filename; audited fold-assigned predictions),Secondary derived grade-≥2 endpoint; not independently trained.,4680,2100,600,600
+Figure 9,Figure_9_Calibration.png,results/raw/oof_predictions.csv (legacy filename; audited fold-assigned predictions),Primary uncalibrated baseline; maximum predicted class probability and 15 fixed bins.,3240,2520,600,600
