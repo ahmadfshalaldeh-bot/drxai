@@ -79,7 +79,7 @@ audit/                       independent audit script and outputs
 src/                         analysis scripts
 archived_pipeline/           supplied preprocessing/training/evaluation scripts (not re-run)
 configs/                     supplied training configuration and environment (not re-verified)
-docs/                        audit notes, release notes, revised manuscript text export
+docs/                        audit notes and release notes
 ```
 
 ## Changes in this revision
@@ -88,7 +88,7 @@ docs/                        audit notes, release notes, revised manuscript text
 - **Figure 6 (confusion matrices) regenerated.** In the earlier panel, the colour bar covered three cells. The counts are unchanged.
 - **QC identifiers recovered and the Section 3.9 sensitivity analysis made reproducible** (`results/qc/`, `src/qc_sensitivity_bootstrap.py`).
 - **Independent audit added** (`audit/`), together with `requirements-tested.txt`, `MANIFEST.csv` and regenerated `checksums.sha256`.
-- **Manuscript text export updated.** `docs/mathematics_dr_endnote_integrated.md`, which carried the old figure numbering, is replaced by `docs/manuscript_revised_text.md`, exported from the revised manuscript.
+- **Stale manuscript text removed.** `docs/mathematics_dr_endnote_integrated.md`, which carried the old figure numbering, was removed; the submitted manuscript is the reference text.
 
 No label, prediction, probability, fold assignment, decision rule or reported estimate was changed.
 
@@ -223,7 +223,7 @@ This repository supports a retrospective computational benchmark. It does not es
 
 ## Suggested citation
 
-Cite the associated manuscript and report the repository commit or release tag used for analysis. Report the repository commit or release tag used. No DOI is asserted.
+Cite the associated manuscript and report the repository commit or release tag used for analysis. No public repository URL, DOI, or open-source license is asserted in this local archive; the corresponding author should add these only after creating and verifying an authorized public release.
 
 ## License and authorship
 

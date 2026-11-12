@@ -5,7 +5,7 @@
 - **Independent second-implementation audit added** (`audit/independent_audit.py`, `audit/outputs/`).
 - **Every analysis script re-run.** The results agree with the shipped outputs, apart from documented tie-resolution sensitivity of the calibrated macro ROC-AUC at the fourth decimal (see README).
 - **Added:** `requirements-tested.txt`, `MANIFEST.csv`, regenerated `checksums.sha256`, and an updated Makefile.
-- **Manuscript text replaced.** `docs/mathematics_dr_endnote_integrated.md`, which used superseded figure numbering, is replaced by `docs/manuscript_revised_text.md`.
+- **Manuscript text replaced.** `docs/mathematics_dr_endnote_integrated.md`, which used superseded figure numbering, was removed; the submitted manuscript is the reference text.
 - **QC sensitivity analysis is now reproducible.** The four QC-flagged image IDs (1986_left, 34689_left, 43457_left, 32253_right) were recovered from the archived sensitivity metrics. Adding `src/qc_sensitivity_bootstrap.py` and its outputs makes the Section 3.9 estimates exactly reproducible. Table 11 was removed from the manuscript; the values are reported in the Section 3.9 text.
 - **Reference 12 updated:** Appl. Comput. Inform. 2026, 22, 210–223.
 - **Unchanged:** no labels, probabilities, fold assignments, decision rules or reported estimates were changed.
