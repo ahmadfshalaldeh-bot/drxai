@@ -1,6 +1,6 @@
 PY ?= python
 
-all: reproduce tables decision calibration qc audit
+all: reproduce tables decision calibration qc diagnostic audit
 
 reproduce:
 	$(PY) src/reproduce_metrics.py --bootstrap-replicates 1000 --seed 2026
@@ -19,6 +19,10 @@ calibration:
 
 qc:
 	$(PY) src/qc_sensitivity_bootstrap.py --root . --replicates 1000 --seed 2026
+
+diagnostic:
+	$(PY) src/diagnostic_accuracy_analysis.py --root . --replicates 1000 --seed 2026
+	$(PY) src/make_diagnostic_figure.py --root . --out submission_figures/Figure_10_Referable_Decision_Analysis.png
 
 audit:
 	$(PY) audit/independent_audit.py . audit/outputs

@@ -1,3 +1,13 @@
+# Release notes — 18 November 2026 (Diagnostics transfer)
+
+- Added `src/diagnostic_accuracy_analysis.py` and `results/diagnostic/`. These compute the diagnostic accuracy of the any-DR, referable-DR and vision-threatening-DR endpoints (sensitivity, specificity, PPV, NPV, LR+, LR−, DOR) with filename-group bootstrap intervals. They also produce:
+  - referable missed cases by grade;
+  - prevalence-adjusted predictive values;
+  - sensitivity-targeted thresholds fitted on four group-disjoint meta-folds and applied to the fifth;
+  - a decision-curve analysis.
+- Added `src/make_diagnostic_figure.py` and `submission_figures/Figure_10_Referable_Decision_Analysis.png`.
+- Nothing in the existing outputs changed. No threshold is chosen on the outcomes it is evaluated on.
+
 # Release notes — 7 November 2026 (revision)
 
 - **Figures renumbered** to match first citation in the revised manuscript (old→new: 8→4, 4→5, 5→6, 9→7, 6→8, 7→9). `submission_figures/` holds the renumbered 600-dpi set.

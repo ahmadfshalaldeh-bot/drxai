@@ -38,6 +38,8 @@ python -m pip install -r requirements-tested.txt       # or: -r requirements.txt
 | 7. Meta-fold seed sensitivity, seeds 2026–2030 | `python src/seed_calibration_sensitivity.py --seeds 2026 2027 2028 2029 2030` | `results/ordinal_calibration/seed_stability_recomputed.csv` | ~1 min |
 | 8. Independent second implementation (does not import `src/`) | `python audit/independent_audit.py . audit/outputs` | `audit/outputs/` | ~1 min |
 | 8b. QC sensitivity analysis (Section 3.9) | `python src/qc_sensitivity_bootstrap.py --root . --replicates 1000 --seed 2026` | `results/qc/` | ~2 min |
+| 8c. Diagnostic-accuracy analyses (likelihood ratios, missed cases, prevalence-adjusted values, cross-fitted thresholds, decision curve) | `python src/diagnostic_accuracy_analysis.py --root . --replicates 1000 --seed 2026` | `results/diagnostic/` | ~2 min |
+| 8d. Regenerate Figure 10 (referable decision analysis) | `python src/make_diagnostic_figure.py --root . --out submission_figures/Figure_10_Referable_Decision_Analysis.png` | PNG, 600 dpi | seconds |
 | 9. Regenerate Figure 6 (confusion matrices) | `python src/make_confusion_matrix_figure.py results/raw/oof_predictions.csv submission_figures/Figure_6_Confusion_Matrices.png` | PNG, 600 dpi | seconds |
 | 10. Verify file hashes | `sha256sum -c checksums.sha256` | — | seconds |
 
@@ -72,6 +74,7 @@ results/metrics/             reference metrics and bootstrap intervals
 results/ordinal_risk_decision/  squared-distance decision sensitivity
 results/ordinal_calibration/ five-meta-fold calibration outputs and paired intervals
 results/recomputed/          output of step 1
+results/diagnostic/          diagnostic-accuracy outputs (Tables 11–12, Figure 10)
 results/qc/                  QC-flagged image IDs and Section 3.9 sensitivity outputs
 results/figures/             data-derived figures (generic file names) and provenance
 submission_figures/          Figures 1–9 at 600 dpi, numbered as in the revised manuscript
